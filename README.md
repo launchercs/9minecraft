@@ -7,7 +7,7 @@
 یک وب‌اپلیکیشن تک‌صفحه‌ای و کاملاً واکنش‌گرا برای پخش آنلاین رادیو که با **HTML، CSS و JavaScript خالص** ساخته شده — بدون هیچ فریم‌ورک یا ابزار build. روی موبایل، تبلت و دسکتاپ تجربه‌ای شبیه به اپ‌های نیتیو ارائه می‌دهد.
 
 ### 🔗 مشاهده آنلاین
-👉 [radio.9craft.ir](http://radio.9craft.ir:7443/) — یا آدرس GitHub Pages خودت
+👉 [https://launchercs.github.io/Radio-Ark-Mine/](https://launchercs.github.io/Radio-Ark-Mine/)
 
 ![پیش‌نمایش](screenshot.png)
 
@@ -37,10 +37,11 @@
 ## 📂 ساختار پروژه
 
 ```
-radio-ork-mine/
-├── index.html      # کل پروژه در یک فایل
-├── LICENSE         # لایسنس MIT
-├── screenshot.png  # تصویر پیش‌نمایش
+Radio-Ark-Mine/
+├── .github/workflows/static.yml   # GitHub Actions برای دیپلوی
+├── index.html                      # کل پروژه در یک فایل
+├── LICENSE                         # لایسنس MIT
+├── screenshot.png                  # تصویر پیش‌نمایش
 └── README.md
 ```
 
@@ -50,9 +51,11 @@ radio-ork-mine/
 
 1. پروژه را کلون کن:
    ```bash
-   git clone https://github.com/USERNAME/radio-ork-mine.git
+   git clone https://github.com/launchercs/Radio-Ark-Mine.git
+   cd Radio-Ark-Mine
    ```
-2. فایل `index.html` را در مرورگر باز کن — **یا** نسخه آنلاین روی GitHub Pages را ببین.
+2. فایل `index.html` را در مرورگر باز کن — **یا** نسخه آنلاین را ببین:
+   👉 [https://launchercs.github.io/Radio-Ark-Mine/](https://launchercs.github.io/Radio-Ark-Mine/)
 3. دکمه ▶️ را بزن و از پخش زنده لذت ببر.
 
 > ⚠️ به‌دلیل سیاست **Autoplay** مرورگرها، پخش فقط با کلیک کاربر شروع می‌شود.
@@ -61,13 +64,10 @@ radio-ork-mine/
 
 ## 🌐 دیپلوی روی GitHub Pages
 
-1. مخزن را روی گیت‌هاب پوش کن.
-2. به **Settings → Pages** برو.
-3. در بخش **Source**، برنچ `main` و پوشه `/root` را انتخاب کن.
-4. آدرس سایت بعد از چند ثانیه فعال می‌شود:
-   ```
-   https://USERNAME.github.io/radio-ork-mine/
-   ```
+این پروژه از **GitHub Actions** برای دیپلوی خودکار استفاده می‌کند. هر بار که تغییری به برنچ `main` پوش کنی، سایت به‌طور خودکار به‌روزرسانی می‌شود.
+
+**آدرس سایت:**
+👉 [https://launchercs.github.io/Radio-Ark-Mine/](https://launchercs.github.io/Radio-Ark-Mine/)
 
 ---
 
@@ -89,12 +89,12 @@ radio-ork-mine/
 
 <div dir="ltr">
 
-# 📻 Radio Ork Mine
+# 📻 Radio Ark Mine
 
 A single-file, fully responsive online radio web app built with **pure HTML, CSS, and JavaScript** — no frameworks, no build tools. Works beautifully on mobile, tablet, and desktop with a native-app-like experience.
 
 ### 🔗 Live Demo
-👉 [radio.9craft.ir](http://radio.9craft.ir:7443/) — or your GitHub Pages URL
+👉 [https://launchercs.github.io/Radio-Ark-Mine/](https://launchercs.github.io/Radio-Ark-Mine/)
 
 ![Preview](screenshot.png)
 
@@ -124,10 +124,11 @@ A single-file, fully responsive online radio web app built with **pure HTML, CSS
 ## 📂 Project Structure
 
 ```
-radio-ork-mine/
-├── index.html      # Everything in one file
-├── LICENSE         # MIT License
-├── screenshot.png  # Preview image
+Radio-Ark-Mine/
+├── .github/workflows/static.yml   # GitHub Actions for deployment
+├── index.html                      # Everything in one file
+├── LICENSE                         # MIT License
+├── screenshot.png                  # Preview image
 └── README.md
 ```
 
@@ -137,9 +138,11 @@ radio-ork-mine/
 
 1. Clone the project:
    ```bash
-   git clone https://github.com/USERNAME/radio-ork-mine.git
+   git clone https://github.com/launchercs/Radio-Ark-Mine.git
+   cd Radio-Ark-Mine
    ```
-2. Open `index.html` in a browser — **or** visit the live GitHub Pages version.
+2. Open `index.html` in a browser — **or** visit the live version:
+   👉 [https://launchercs.github.io/Radio-Ark-Mine/](https://launchercs.github.io/Radio-Ark-Mine/)
 3. Hit the ▶️ button and enjoy live radio.
 
 > ⚠️ Due to browser **autoplay policies**, playback only starts after a user click.
@@ -148,13 +151,10 @@ radio-ork-mine/
 
 ## 🌐 Deploy on GitHub Pages
 
-1. Push the repo to GitHub.
-2. Go to **Settings → Pages**.
-3. Select branch `main` and folder `/root`.
-4. Your site will be live at:
-   ```
-   https://USERNAME.github.io/radio-ork-mine/
-   ```
+This project uses **GitHub Actions** for automatic deployment. Every push to the `main` branch updates the live site.
+
+**Live URL:**
+👉 [https://launchercs.github.io/Radio-Ark-Mine/](https://launchercs.github.io/Radio-Ark-Mine/)
 
 ---
 
