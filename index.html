@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="format-detection" content="telephone=no">
-<title>رادیو ناین ماینکرفت</title>
+<title>رادیو ارک ماین</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
 /* ---------- Reset & Base ---------- */
@@ -23,7 +23,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* فونت سازگار با همه سیستم‌ها */
 :root {
   --font-fa: "Segoe UI", Tahoma, "Iranian Sans", "Vazirmatn",
              system-ui, -apple-system, "Noto Sans Arabic", "DejaVu Sans",
@@ -49,7 +48,6 @@ html, body {
 }
 
 body {
-  /* dvh برای موبایل بهتره، vh به عنوان fallback */
   min-height: 100vh;
   min-height: 100dvh;
   font-family: var(--font-fa);
@@ -64,10 +62,8 @@ body {
     calc(12px + var(--safe-bottom))
     calc(12px + var(--safe-left));
   color: #fff;
-  /* جلوگیری از انتخاب متن روی موبایل */
   -webkit-user-select: none;
   user-select: none;
-  /* GPU acceleration */
   transform: translateZ(0);
   backface-visibility: hidden;
 }
@@ -85,7 +81,6 @@ body {
   border: 1px solid rgba(45, 212, 191, 0.2);
   animation: glow 5s infinite alternate;
   will-change: box-shadow;
-  /* روی ویندوز قرمز رنگ با border-radius تمیزتر */
   isolation: isolate;
 }
 
@@ -161,18 +156,30 @@ body {
 .cover {
   position: relative;
   width: 100%;
-  /* fallback برای مرورگرهای قدیمی */
-  padding-bottom: 100%;
-  height: 0;
+  aspect-ratio: 1 / 1;
   border-radius: 24px;
   overflow: hidden;
   margin-bottom: 16px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
   background: var(--bg-dark);
-  /* پشتیبانی مدرن */
-  aspect-ratio: 1 / 1;
-  height: auto;
-  padding-bottom: 0;
+}
+
+/* Fallback برای مرورگرهای بدون aspect-ratio */
+@supports not (aspect-ratio: 1 / 1) {
+  .cover {
+    height: 0;
+    padding-bottom: 100%;
+  }
+  .cover img,
+  .cover canvas,
+  .cover .waves {
+    position: absolute;
+    inset: 0;
+  }
+  .cover canvas {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .cover img {
@@ -189,7 +196,6 @@ body {
 }
 
 .cover img.fade-out { opacity: 0; }
-.cover img.fade-in { opacity: 1; }
 
 /* ---------- موج صوتی ---------- */
 .waves {
@@ -234,8 +240,9 @@ body {
   50% { transform: scaleY(1.7); opacity: 1; }
 }
 
-.paused .bar {
-  animation-play-state: paused;
+/* اصلاح: animation: none به جای play-state */
+.waves.paused .bar {
+  animation: none;
   transform: scaleY(0.5);
   opacity: 0.5;
 }
@@ -279,7 +286,6 @@ body {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: #d1d5db;
-  /* حداقل 44px برای استاندارد لمسی */
   width: 50px;
   height: 50px;
   min-width: 44px;
@@ -294,7 +300,6 @@ body {
   will-change: transform;
   -webkit-user-select: none;
   user-select: none;
-  /* جلوگیری از menu روی long press موبایل */
   -webkit-touch-callout: none;
   touch-action: manipulation;
 }
@@ -339,7 +344,6 @@ body {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--accent);
-  /* حداقل 44px */
   width: 44px;
   height: 44px;
   min-width: 44px;
@@ -365,7 +369,6 @@ body {
   border-color: rgba(239, 68, 68, 0.4);
 }
 
-/* اسلایدر سازگار با WebKit (Chrome/Edge/Safari) و Firefox و موبایل */
 .volume-slider {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -385,16 +388,13 @@ body {
   outline: none;
   cursor: pointer;
   direction: ltr;
-  /* جلوگیری از انتخاب متن روی درگ */
   -webkit-user-select: none;
   user-select: none;
-  /* اجازه بده تاچ‌پد و موس و تاچ هر سه کار کنن */
   touch-action: pan-y;
   margin: 0;
   padding: 0;
 }
 
-/* WebKit (Chrome, Edge, Safari, Opera) */
 .volume-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -406,7 +406,6 @@ body {
   box-shadow: 0 0 10px rgba(45, 212, 191, 0.7);
   cursor: pointer;
   transition: transform 0.15s ease;
-  /* اندازه لمسی بزرگ‌تر روی موبایل */
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -414,7 +413,6 @@ body {
   transform: scale(1.2);
 }
 
-/* Firefox */
 .volume-slider::-moz-range-thumb {
   width: 18px;
   height: 18px;
@@ -438,7 +436,6 @@ body {
   background: var(--accent);
 }
 
-/* IE/Edge قدیمی (بدون پشتیبانی از ::-webkit-) */
 .volume-slider::-ms-thumb {
   width: 18px;
   height: 18px;
@@ -582,6 +579,8 @@ body {
   }
   .radio { animation: none; }
   .live { animation: none; }
+  .btn.play.loading { animation: none; }
+  .bar { animation: none; }
 }
 
 /* ---------- Landscape موبایل (ارتفاع کم) ---------- */
@@ -633,17 +632,11 @@ body {
   .btn:hover {
     background: rgba(255, 255, 255, 0.1);
   }
+  .btn.play:hover {
+    box-shadow: 0 10px 25px rgba(45, 212, 191, 0.65);
+  }
   .volume-btn:hover {
     background: rgba(45, 212, 191, 0.15);
-  }
-}
-
-/* ---------- دستگاه‌های لمسی: حذف hover ---------- */
-@media (hover: none) {
-  .genre:hover,
-  .btn:hover,
-  .volume-btn:hover {
-    /* هیچ تغییری نده - جلوگیری از stuck hover */
   }
 }
 </style>
@@ -654,7 +647,7 @@ body {
   <div class="header">
     <div class="brand">
       <i class="fas fa-broadcast-tower"></i>
-      <span>ناین ماینکرفت</span>
+      <span>ارک ماین</span>
     </div>
     <div class="live">
       <i class="fas fa-circle"></i> زنده
@@ -678,12 +671,11 @@ body {
   </div>
 
   <div class="controls">
-    <button class="btn play" id="play" aria-label="پخش/توقف">
+    <button class="btn play" id="play" aria-label="پخش">
       <i class="fas fa-play" id="playIcon"></i>
     </button>
   </div>
 
-  <!-- کنترل صدا -->
   <div class="volume-wrap">
     <button class="volume-btn" id="muteBtn" title="بی‌صدا / وصل صدا" aria-label="بی‌صدا">
       <i class="fas fa-volume-high" id="muteIcon"></i>
@@ -709,7 +701,8 @@ body {
   <div class="status" id="status">برای پخش، دکمه ▶️ را بزن</div>
 </div>
 
-<audio id="audio" preload="none" crossorigin="anonymous"></audio>
+<!-- crossorigin حذف شد تا CORS پخش را بلاک نکند -->
+<audio id="audio" preload="none"></audio>
 
 <script>
 (function () {
@@ -728,7 +721,6 @@ body {
   const canvas = document.getElementById("visualizer");
   const ctx = canvas.getContext("2d", { alpha: true });
 
-  // کنترل صدا
   const volumeSlider = document.getElementById("volumeSlider");
   const volumeValue = document.getElementById("volumeValue");
   const muteBtn = document.getElementById("muteBtn");
@@ -740,16 +732,22 @@ body {
   let coverTimer = null;
   let currentGenre = "phonk";
   let coverIndex = 0;
+  let currentStreamUrl = "";
 
-  const BASE_URL = "http://radio.9craft.ir:7443/";
+  // ⚠️ نکته مهم: اگر سرور HTTPS ندارد، حتماً از پروکسی معکوس استفاده کن
+  const BASE_URL = "https://radio.9craft.ir:7443/";
 
-  /* Web Audio */
   let audioContext = null;
   let analyser = null;
   let sourceNode = null;
   let freqData = null;
   let timeData = null;
   let audioGraphReady = false;
+  let audioGraphAttempted = false; // جلوگیری از دوبار createMediaElementSource
+
+  // توکن برای لغو درخواست‌های قدیمی هنگام تغییر سریع ژانر
+  let streamToken = 0;
+
   let rafId = null;
 
   const genresData = {
@@ -829,7 +827,9 @@ body {
   };
 
   function setupAudioGraph() {
-    if (audioGraphReady) return true;
+    // اگر قبلاً تلاش شده، دیگر تکرار نکن
+    if (audioGraphAttempted) return audioGraphReady;
+    audioGraphAttempted = true;
 
     try {
       const AC = window.AudioContext || window.webkitAudioContext;
@@ -853,7 +853,7 @@ body {
       return true;
     } catch (err) {
       console.warn("Visualizer unavailable:", err);
-      statusEl.textContent = "🎵 در حال پخش";
+      audioGraphReady = false;
       return false;
     }
   }
@@ -868,12 +868,11 @@ body {
   }
 
   let lastFrame = 0;
-  const FRAME_INTERVAL = 1000 / 45; // محدود به 45fps برای صرفه‌جویی باتری موبایل
+  const FRAME_INTERVAL = 1000 / 45;
 
   function drawVisualizer(now) {
     rafId = requestAnimationFrame(drawVisualizer);
 
-    // throttle برای موبایل
     if (now && now - lastFrame < FRAME_INTERVAL) return;
     lastFrame = now || 0;
 
@@ -924,7 +923,9 @@ body {
 
     ctx.beginPath();
     for (let i = 0; i < bars; i++) {
-      const idx = Math.floor(i * (freqData ? freqData.length * .82 : 1) / bars);
+      const idx = freqData
+        ? Math.floor(i * (freqData.length * .82) / bars)
+        : 0;
       const value = freqData ? freqData[idx] / 255 : 0;
       const angle = (Math.PI * 2 * i) / bars - Math.PI / 2;
       const inner = radius + 4;
@@ -941,7 +942,7 @@ body {
     if (timeData) {
       ctx.beginPath();
       for (let x = 0; x <= w; x += 3) {
-        const i = Math.floor((x / w) * timeData.length);
+        const i = Math.floor((x / w) * (timeData.length - 1));
         const sample = (timeData[i] - 128) / 128;
         const y = h - 28 - sample * (12 + level * 25);
         if (x === 0) ctx.moveTo(x, y);
@@ -961,16 +962,25 @@ body {
 
   function changeCover(genre) {
     const data = genresData[genre];
-    if (!data) return;
+    if (!data || !data.covers || data.covers.length === 0) return;
+    if (data.covers.length === 1) return;
 
-    coverIndex = (coverIndex + 1) % data.covers.length;
+    let nextIndex = (coverIndex + 1) % data.covers.length;
+    // اگر تصویر فعلی همان است، یکی جلوتر برو
+    if (data.covers[nextIndex] === cover.src && data.covers.length > 1) {
+      nextIndex = (nextIndex + 1) % data.covers.length;
+    }
+    coverIndex = nextIndex;
+
     const nextCover = data.covers[coverIndex];
     cover.classList.add("fade-out");
 
     const newImg = new Image();
     newImg.onload = function () {
       cover.src = newImg.src;
-      requestAnimationFrame(() => requestAnimationFrame(() => cover.classList.remove("fade-out")));
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => cover.classList.remove("fade-out"));
+      });
     };
     newImg.onerror = () => cover.classList.remove("fade-out");
     newImg.src = nextCover;
@@ -988,16 +998,51 @@ body {
     }
   }
 
+  function setPlayingState(state) {
+    playing = state;
+    if (state) {
+      playIcon.className = "fas fa-pause";
+      playBtn.setAttribute("aria-label", "توقف");
+      waves.classList.remove("paused");
+      startCoverRotation();
+    } else {
+      playIcon.className = "fas fa-play";
+      playBtn.setAttribute("aria-label", "پخش");
+      waves.classList.add("paused");
+      stopCoverRotation();
+      cover.style.filter = "brightness(0.85) saturate(1.2)";
+    }
+  }
+
+  function setLoadingState(state) {
+    loading = state;
+    if (state) {
+      playIcon.className = "fas fa-spinner";
+      playBtn.classList.add("loading");
+      playBtn.setAttribute("aria-label", "در حال اتصال... (برای لغو کلیک کن)");
+    } else {
+      playBtn.classList.remove("loading");
+      playBtn.setAttribute("aria-label", playing ? "توقف" : "پخش");
+    }
+  }
+
   async function togglePlay() {
-    if (loading) return;
+    // اگر در حال بارگذاری است، لغو کن
+    if (loading) {
+      streamToken++;
+      audio.pause();
+      audio.src = "";
+      currentStreamUrl = "";
+      setLoadingState(false);
+      setPlayingState(false);
+      statusEl.textContent = "لغو شد";
+      return;
+    }
 
     if (playing) {
       audio.pause();
-      playing = false;
-      playIcon.className = "fas fa-play";
-      waves.classList.add("paused");
+      setPlayingState(false);
       statusEl.textContent = "متوقف شد";
-      stopCoverRotation();
       return;
     }
 
@@ -1009,87 +1054,89 @@ body {
     const genre = active ? active.getAttribute("data-stream") : currentGenre;
     const url = BASE_URL + genre;
 
-    loading = true;
-    playIcon.className = "fas fa-spinner";
-    playBtn.classList.add("loading");
+    const myToken = ++streamToken;
+
+    setLoadingState(true);
     statusEl.textContent = "در حال اتصال...";
 
     try {
-      setupAudioGraph();
-      if (audioContext && audioContext.state === "suspended") {
-        await audioContext.resume();
+      // مهم: AudioContext.resume باید داخل user gesture باشد → قبل از await
+      const graphOk = setupAudioGraph();
+      if (graphOk && audioContext && audioContext.state === "suspended") {
+        audioContext.resume().catch(() => {});
       }
 
-      if (audio.src !== url) {
+      if (currentStreamUrl !== url) {
+        currentStreamUrl = url;
         audio.src = url;
         audio.load();
       }
 
       await audio.play();
 
-      loading = false;
-      playing = true;
+      // اگر کاربر در این فاصله ژانر دیگری انتخاب کرده، رها کن
+      if (myToken !== streamToken) return;
+
+      setLoadingState(false);
+      setPlayingState(true);
       currentGenre = genre;
-      playBtn.classList.remove("loading");
-      playIcon.className = "fas fa-pause";
-      waves.classList.remove("paused");
       statusEl.textContent = "🎵 پخش زنده • واکنش به صدا فعال";
       coverIndex = 0;
-      startCoverRotation();
     } catch (err) {
-      loading = false;
-      playing = false;
-      playBtn.classList.remove("loading");
-      playIcon.className = "fas fa-play";
-      waves.classList.add("paused");
+      if (myToken !== streamToken) return;
+
+      setLoadingState(false);
+      setPlayingState(false);
       statusEl.textContent = "⚠️ اتصال ناموفق؛ دوباره ▶️ را بزن";
       console.log("خطای پخش:", err);
+
+      // ریست تا retry واقعاً دوباره تلاش کند
+      audio.src = "";
+      currentStreamUrl = "";
     }
   }
 
   audio.addEventListener("playing", () => {
-    loading = false;
-    playing = true;
-    playBtn.classList.remove("loading");
-    playIcon.className = "fas fa-pause";
-    waves.classList.remove("paused");
+    setLoadingState(false);
+    setPlayingState(true);
     statusEl.textContent = "🎵 در حال پخش زنده • Visualizer فعال";
   });
 
   audio.addEventListener("waiting", () => {
     if (playing) {
       statusEl.textContent = "⏳ بافر کردن...";
-      playIcon.className = "fas fa-spinner";
-      playBtn.classList.add("loading");
+      setLoadingState(true);
     }
   });
 
   audio.addEventListener("canplay", () => {
     if (playing) {
-      playBtn.classList.remove("loading");
-      playIcon.className = "fas fa-pause";
+      setLoadingState(false);
     }
   });
 
   audio.addEventListener("error", () => {
-    loading = false;
-    playing = false;
-    playBtn.classList.remove("loading");
-    playIcon.className = "fas fa-play";
-    waves.classList.add("paused");
-    stopCoverRotation();
+    setLoadingState(false);
+    setPlayingState(false);
     statusEl.textContent = "⚠️ خطا در اتصال به استریم";
+    audio.src = "";
+    currentStreamUrl = "";
   });
 
-  audio.addEventListener("pause", stopCoverRotation);
+  audio.addEventListener("pause", () => {
+    if (playing) setPlayingState(false);
+  });
 
   playBtn.addEventListener("click", togglePlay);
 
-  // کلیک + کیبورد برای ژانرها
   function selectGenre(el) {
     const genre = el.getAttribute("data-stream");
-    currentGenre = genre;
+    if (!genre) return;
 
+    // اگر همان ژانر فعلی است و در حال پخشیم، کاری نکن
+    if (genre === currentGenre && playing) return;
+
+    currentGenre = genre;
     genres.forEach(g => g.classList.remove("active"));
     el.classList.add("active");
 
@@ -1102,13 +1149,16 @@ body {
     coverIndex = 0;
     if (data && data.covers && data.covers[0]) {
       cover.src = data.covers[0];
+      cover.style.filter = "brightness(0.85) saturate(1.2)";
     }
 
-    if (playing) {
+    if (playing || loading) {
+      // توکن قبلی باطل می‌شود
+      streamToken++;
       audio.pause();
-      playing = false;
-      stopCoverRotation();
-      setTimeout(startStream, 180);
+      setLoadingState(false);
+      setPlayingState(false);
+      startStream();
     } else {
       statusEl.textContent = "برای پخش، دکمه ▶️ را بزن";
     }
@@ -1129,7 +1179,6 @@ body {
     }
   });
 
-  /* ---------- کنترل صدا ---------- */
   function updateVolumeUI(value) {
     const percent = Math.round(value * 100);
     volumeValue.textContent = percent + "%";
@@ -1141,79 +1190,93 @@ body {
        value < 0.66 ? "fa-volume-low" : "fa-volume-high");
 
     muteBtn.classList.toggle("mute", value === 0);
+    muteBtn.setAttribute("aria-label", value === 0 ? "وصل صدا" : "بی‌صدا");
+  }
+
+  function applyVolume(val) {
+    audio.volume = val;
+    if (val > 0) lastVolume = val;
+    updateVolumeUI(val);
   }
 
   volumeSlider.addEventListener("input", () => {
-    const val = parseFloat(volumeSlider.value);
-    audio.volume = val;
-    if (val > 0) lastVolume = val;
-    updateVolumeUI(val);
+    applyVolume(parseFloat(volumeSlider.value));
   });
 
-  // پشتیبانی از change برای مرورگرهای قدیمی که input نمی‌فرستن
   volumeSlider.addEventListener("change", () => {
-    const val = parseFloat(volumeSlider.value);
-    audio.volume = val;
-    if (val > 0) lastVolume = val;
-    updateVolumeUI(val);
+    applyVolume(parseFloat(volumeSlider.value));
   });
 
   muteBtn.addEventListener("click", () => {
     if (audio.volume > 0) {
       lastVolume = audio.volume;
-      audio.volume = 0;
+      applyVolume(0);
       volumeSlider.value = 0;
-      updateVolumeUI(0);
+      muteBtn.setAttribute("aria-label", "وصل صدا");
     } else {
-      audio.volume = lastVolume || 1;
-      volumeSlider.value = audio.volume;
-      updateVolumeUI(audio.volume);
+      const v = lastVolume > 0 ? lastVolume : 1;
+      applyVolume(v);
+      volumeSlider.value = v;
+      muteBtn.setAttribute("aria-label", "بی‌صدا");
     }
   });
 
   volumeSlider.addEventListener("keydown", (e) => {
     if (e.key === "ArrowUp" || e.key === "ArrowRight") {
       e.preventDefault();
-      const v = Math.min(1, audio.volume + 0.05);
-      audio.volume = v; volumeSlider.value = v; updateVolumeUI(v);
+      const v = Math.min(1, Math.round((audio.volume + 0.05) * 100) / 100);
+      applyVolume(v);
+      volumeSlider.value = v;
     } else if (e.key === "ArrowDown" || e.key === "ArrowLeft") {
       e.preventDefault();
-      const v = Math.max(0, audio.volume - 0.05);
-      audio.volume = v; volumeSlider.value = v; updateVolumeUI(v);
+      const v = Math.max(0, Math.round((audio.volume - 0.05) * 100) / 100);
+      applyVolume(v);
+      volumeSlider.value = v;
     }
   });
 
-  // مقدار اولیه صدا
   audio.volume = 1;
   updateVolumeUI(1);
 
-  // Debounce resize برای موبایل (چرخش صفحه)
   let resizeTimer = null;
   window.addEventListener("resize", () => {
     if (resizeTimer) clearTimeout(resizeTimer);
     resizeTimer = setTimeout(resizeCanvas, 150);
   });
 
-  // orientationchange مخصوص موبایل
   window.addEventListener("orientationchange", () => {
     setTimeout(resizeCanvas, 300);
   });
 
-  // Pause کردن visualizer وقتی صفحه پنهانه (صرفه‌جویی باتری)
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
       stopCoverRotation();
-      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+      if (audioContext && audioContext.state === "running") {
+        audioContext.suspend().catch(() => {});
+      }
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
     } else {
       if (playing) startCoverRotation();
-      if (!rafId) rafId = requestAnimationFrame(drawVisualizer);
+      if (audioContext && audioContext.state === "suspended" && playing) {
+        audioContext.resume().catch(() => {});
+      }
+      resizeCanvas();
+      if (!rafId) {
+        rafId = requestAnimationFrame(drawVisualizer);
+      }
     }
   });
 
-  // Start
-  if (audioGraphReady || setupAudioGraph()) {
+  // شروع حلقه visualizer
+  setupAudioGraph();
+  requestAnimationFrame(() => {
+    resizeCanvas();
     rafId = requestAnimationFrame(drawVisualizer);
-  }
+  });
+
   statusEl.textContent = "برای پخش، دکمه ▶️ را بزن";
 })();
 </script>
